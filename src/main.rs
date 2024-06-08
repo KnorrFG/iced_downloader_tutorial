@@ -1,10 +1,11 @@
 use iced::{
     alignment::Horizontal,
+    executor,
     widget::{
         button, column, container, horizontal_rule, row, scrollable, text, text_input, Column,
-        Container, Text,
+        Container,
     },
-    Alignment, Element, Length, Padding, Renderer, Sandbox, Settings, Theme,
+    Alignment, Application, Command, Element, Length, Padding, Renderer, Settings, Theme,
 };
 
 struct Downloader {
@@ -27,21 +28,27 @@ enum DownloadState {
     Starting,
 }
 
-impl Sandbox for Downloader {
+impl Application for Downloader {
     type Message = Message;
+    type Executor = executor::Default;
+    type Theme = Theme;
+    type Flags = ();
 
-    fn new() -> Self {
-        Downloader {
-            link_edit_contents: "".into(),
-            downloads: vec![],
-        }
+    fn new(_flags: ()) -> (Self, Command<Message>) {
+        (
+            Downloader {
+                link_edit_contents: "".into(),
+                downloads: vec![],
+            },
+            Command::none(),
+        )
     }
 
     fn title(&self) -> String {
         "Iced Downloader Tutorial".into()
     }
 
-    fn update(&mut self, message: Self::Message) {
+    fn update(&mut self, message: Self::Message) -> Command<Message> {
         match message {
             Message::NewDLButtonPressed => {
                 self.downloads.push(Download {
@@ -52,6 +59,7 @@ impl Sandbox for Downloader {
             }
             Message::LinkEditChanged(s) => self.link_edit_contents = s,
         }
+        Command::none()
     }
 
     fn view(&self) -> iced::Element<'_, Self::Message> {
@@ -92,7 +100,6 @@ impl Downloader {
             ))
             .padding(Padding::from([10, 30]))
         )
-        .into()
     }
 }
 
