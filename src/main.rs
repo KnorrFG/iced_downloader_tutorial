@@ -1,8 +1,12 @@
-use iced::{widget::text, Sandbox, Settings};
+use iced::{
+    alignment::Horizontal,
+    widget::{button, container, row, text, text_input},
+    Length, Padding, Sandbox, Settings,
+};
 
 struct Downloader;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 enum Message {}
 
 impl Sandbox for Downloader {
@@ -19,7 +23,18 @@ impl Sandbox for Downloader {
     fn update(&mut self, _message: Self::Message) {}
 
     fn view(&self) -> iced::Element<'_, Self::Message> {
-        text("Hello World").into()
+        container(
+            row!(
+                text_input("link", ""),
+                button(text("+").horizontal_alignment(Horizontal::Center))
+                    .width(Length::Fixed(40.0))
+            )
+            .spacing(20),
+        )
+        .padding(Padding::from([30, 80]))
+        .center_x()
+        .center_y()
+        .into()
     }
 }
 
