@@ -7,3 +7,7 @@ link those once they exist.
 The final product will look like this:
 
 ![Image of the final GUI](./04_ui_final.png)
+
+The icons are taken from iconsdb.com:
+- Checkmark: <https://www.iconsdb.com/green-icons/checkmark-icon.html>
+- Alert: <https://www.iconsdb.com/red-icons/alert-icon.html>
